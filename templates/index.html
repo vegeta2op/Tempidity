@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+<head>
+  <title>Sensor Readings</title>
+</head>
+<body>
+  <div class="widget temperature" id="temperatureWidget">
+    <div class="reading-value" id="temperature"></div>
+    <div class="reading-label">°C</div>
+  </div>
+
+  <div class="humidity-widget humidity" id="humidityWidget">
+    <div class="humidity-fill" id="humidityFill"></div>
+    <div class="reading-value" id="humidity"></div>
+    <div class="reading-label">&nbsp;&nbsp;%</div>
+  </div>
+
+  <div class="widget ir" id="irWidget">
+    <div class="reading-value" id="irSensor"></div>
+  </div>
+
+  <script>
+    function updateTemperatureColor(temperature) {
+      const temperatureWidget = document.getElementById('temperatureWidget');
+      const temperatureValue = document.getElementById('temperature');
+
+      // Calculate the temperature color gradient
+      let gradientColor = '';
+      if (temperature <= 16.0) {
+        gradientColor = 'blue';
+      } else if (temperature <= 25.0) {
+        const blueRatio = (25.0 - temperature) / (25.0 - 16.0);
+        gradientColor = `rgba(0, 0, 255, ${blueRatio}), green`;
+      } else if (temperature <= 33.0) {
+        const greenRatio = (33.0 - temperature) / (33.0 - 25.0);
+        gradientColor = `rgba(0, 255, 0, ${greenRatio}), rgba(255, 165, 0, ${1 - greenRatio})`;
+      } else {
+        gradientColor = 'orange, red';
+      }
+
+      temperatureWidget.style.background = `linear-gradient(to bottom, ${gradientColor})`;
+      temperatureValue.style.color = temperature <= 25.0 ? 'black' : 'white';
+    }
+
+    function updateHumidityFill(humidity) {
+      const humidityFill = document.getElementById('humidityFill');
+      const fillHeight = humidity;
+      humidityFill.style.height = `${fillHeight}%`;
+    }
+
+    function updateIRColor(irData) {
+      const irWidget = document.getElementById('irWidget');
+      if (irData === 0) {
+        irWidget.style.backgroundColor = 'green';
+      } else {
+        irWidget.style.backgroundColor = 'red';
+      }
+    }
+
+    function fetchData() {
+      fetch('/api/sensor-data')
+        .then(response => response.json())
+        .then(data => {
+          const temperature = parseFloat(data.Temp_sensor);
+          const humidity = parseFloat(data.Humidity);
+          const irData = parseFloat(data.IR_data);
+
+          document.getElementById('temperature').textContent = temperature.toFixed(1);
+          document.getElementById('humidity').textContent = humidity.toFixed(1);
+          document.getElementById('irSensor').textContent = irData.toFixed(1);
+
+          updateTemperatureColor(temperature);
+          updateHumidityFill(humidity);
+          updateIRColor(irData);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+
+    // Fetch data immediately and then every 5 seconds
+    fetchData();
+    setInterval(fetchData, 5000);
+  </script>
+</body>
+</html>

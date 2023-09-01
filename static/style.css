@@ -1,0 +1,86 @@
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(45deg, #133a2c, #690f9a);
+  }
+
+  .widget {
+    border-radius: 44px;
+    padding: 80px;
+    margin: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 82px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    height: 100px;
+  }
+
+  .temperature {
+    transition: background 0.5s ease-in-out;
+  }
+
+  .humidity {
+    position: relative;
+  }
+
+  .humidity-widget {
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 44px;
+    padding: 80px;
+    margin: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 82px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    height: 100px;
+  }
+
+  .humidity-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0;
+    width: 100%;
+    background-color: blue;
+    transition: height 0.5s ease-in-out;
+  }
+
+  .humidity-text {
+    font-size: 16px;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    
+  }
+
+  .ir {
+    transition: background 0.5s ease-in-out;
+  }
+
+  .reading-value , .reading-label {
+    font-size: 36px;
+    margin-top: 10px;
+    position: relative; /* Add this line */
+z-index: 1; /* Add this line */ 
+  }
+
+  @media (max-width: 786px) {
+body {
+  flex-direction: column;
+}
+
+.widget .humidity-widget {
+  width: 20%;
+}
+}
