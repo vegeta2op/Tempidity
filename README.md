@@ -6,10 +6,10 @@ A fun yet simple project where we aim to Integrate ESP32 sensor readings and sho
 
 - Firstly You will need to start ESP32 with the sensors 
 
-- Refer [ ESP32 and Firebase Integration]()
+- Refer [ ESP32 and Firebase Integration](https://github.com/vegeta2op/ESP-Tempidity)
 
 - Once ready Clone This Repo. (Refer Intsallation Section here)
-- 
+
 ## Installation And Deployment
 
 #### Clone this Repo  
